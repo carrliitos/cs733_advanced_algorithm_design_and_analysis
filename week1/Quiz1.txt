@@ -1,0 +1,137 @@
+1. In the Insertion Sort algorithm, how is the sorting accomplished?
+
+a. By building a sorted portion of the array one element at a time by inserting each element into its correct position within the sorted portion.
+b. By partitioning the array into two subarrays, sorting each subarray, and then merging them.
+c. By repeatedly selecting pairs of adjacent elements and swapping them if they are in the wrong order.
+d. By selecting the maximum element and moving it to the end of the array.
+
+Answer: a
+
+2. In the Selection Sort algorithm, how are elements sorted?
+
+a. By repeatedly dividing the array into smaller subarrays and sorting them recursively.
+b. By comparing adjacent elements and swapping them if they are in the wrong order.
+c. By repeatedly selecting the minimum element from the unsorted portion of the array and swapping it with the first unsorted element.
+d. By selecting the maximum element and moving it to the end of the array.
+
+Answer: c
+
+3.  Merge sort uses which of the following technique to implement sorting?
+
+a. greedy algorithm
+b. divide and conquer
+c. dynamic programming
+d. backtracking
+
+Answer: d
+
+4.  QuickSort can be categorized into which of the following?
+
+a. Brute Force technique
+b. Dynamic programming
+c. Divide and conquer
+d. Greedy algorithm
+
+Answer: c
+
+5.  In the Merge Sort algorithm, what is the main technique used to sort an array?
+
+a. Constructing a binary heap and repeatedly extracting the maximum element.
+b. Selecting the pivot element and partitioning the array into smaller subarrays.
+c. Dividing the array into smaller subarrays, sorting them, and then merging them.
+d. Repeatedly selecting the minimum element and moving it to the beginning of the array.
+
+Answer: c
+
+6.  What is a randomized QuickSort?
+
+a. Any element in the array is chosen as the pivot
+b. The rightmost element is chosen as the pivot
+c. A random number is generated which is used as the pivot
+d. The leftmost element is chosen as the pivot
+
+Answer: c -- WRONG
+Correct: a. Any element in the array is chosen as the pivot
+
+7.  What is the best time complexity of bubble sort?
+
+a. O(n^3)
+b. O(n log n)
+c. O(n^2)
+d. O(n)
+
+Answer: d
+
+8. What is the best time complexity of insertion sort?
+
+a. O(n^.5)
+b. O(n log n)
+c. O(n^2)
+d. O(n)
+
+Answer: d
+
+9. What is the average  time complexity of bubble sort?
+
+a. O(n)
+b. O(n^2)
+c. O(n log n)
+d. O(n^.5)
+
+Answer: b
+
+10. What is the average time complexity of insertion sort?
+
+a. O(n^.5)
+b. O(n^2)
+c. O(n log n)
+d. O(n)
+
+Answer: b
+
+11. Which of the following algorithms has running time O(n2) in the worst case but O(n log n) on average?
+
+a. Bubblesort
+b. Mergesort
+c. Heapsort
+d. Quicksort
+
+Answer: d
+
+12. In the Heap Sort algorithm, what kind of data structure is used to represent the heap?
+
+a. Hash Table
+b. Stack
+c. Array
+d. Linked List
+
+Answer: c
+
+13. A k-ary tree is a tree in which every node has at most k children. In a k-ary tree with n nodes and height h, which of the following is an upper bound for the maximum number of leaves as a function of h, k, and n ? 
+
+a. log_k(h)
+b. log_k(n)
+c. k^h
+d. h^k
+
+Answer: c
+
+14. Let k be an integer greater than 1. Which of the following represents the order of growth of the expression SUM k^i (for i=1 to n) as a function of n?
+
+a. Theta(k^(n log n))
+b. Theta(k^(n+1))
+c. Theta(k^n)
+d. Theta(k^(2kn))
+
+Answer: b -- WRONG
+Correct: c. Theta(k^n)
+
+15. Let T(n) be defined by T(1)= 7  = and  T(n+1) = 3 T(n) + 1  for all integers n >= 1. Which of the following represents the order of growth of T(n) as a function of n? 
+
+a. Theta(n log n)
+b. Theta(n)
+c. Theta(n^2)
+d. Theta(2^n)
+
+Answer: d -- WRONG
+Correct: c. Theta(n^2)
