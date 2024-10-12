@@ -1,0 +1,118 @@
+\documentclass[12pt]{article}
+%\pagestyle{empty} 
+\usepackage{amsmath}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{epsfig}
+
+\newcommand{\vs}{\vspace{2mm}}
+\newcommand{\ls}{\vspace{5mm}} 
+
+\newcommand{\ms}{\vspace{3mm}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\sm}{\small}
+\newcommand{\hs}{\hspace{10mm}}
+\newcommand{\ha}{\hspace{1mm}}
+\newcommand{\bo}{\rule{2mm}{3mm}}
+\textheight=680pt
+\textwidth=460pt
+\hoffset=-50pt
+\voffset=-50pt
+%\topmargin=-0.5in
+%\textheight=10in
+%\oddsidemargin=0.125in
+%\evensidemargin=0.125in
+%\textwidth=7.5in
+\begin{document}
+\bc\ 
+ { \bf Homework 5 (50 points) }  Due: October 11, 2024 11:59 pm\\
+ { \bf COMPSCI 733: Advanced Algorithms and Designs } \\ 
+ { \bf Benzon Carlitos Salazar (salazarbc24@uww.edu) } 
+\ec\
+\ls\
+\noindent{\bf Documentation:} (5 points) Type your solutions using Latex \\
+(www.overleaf.com or https://www.latex-project.org/ ). Submit your solutions (pdf is enough)  to Canvas. 
+
+\vs\
+
+\noindent{\bf Problem 1: } (15 points)
+\vs\
+
+Prove that if an edge $(u,v)$ is contained in some minimum spanning tree, then it is a light edge crossing some cut of the graph.
+\vs\
+
+\begin{proof}   
+    Let $G = (V, E)$ be a connected, weighted graph, and let $T$ be a minimum spanning tree (MST) of $G$. Suppose $(u, v)$ is an edge in $T$. We want to prove that $(u, v)$ is a light edge crossing some cut of $G$.
+
+    \begin{enumerate}
+        \item Consider the MST $T$. Removing the edge $(u, v)$ from $T$ divides $T$ into two disjoint subtrees, say $A$ and $B$, where $u \in A$ and $v \in B$. Define the cut $(A, B)$ as the set of all edges that have one endpoint in $A$ and the other in $B$.
+        
+        \item Since $(u, v)$ is an edge of $T$, it must cross the cut $(A, B)$.
+        
+        \item By the definition of an MST, if we add any edge other than $(u, v)$ that crosses the cut $(A, B)$, it would create a cycle in $T$. Therefore, $(u, v)$ must be the only edge in $T$ that crosses this cut.
+        
+        \item Now, suppose $(u, v)$ were not the lightest edge crossing the cut $(A, B)$. Then there would exist another edge $(x, y)$ crossing the cut with a weight less than $(u, v)$.
+        
+        \item If $(x, y)$ were added to $T$, replacing $(u, v)$, it would form a spanning tree with a smaller total weight than $T$. This would contradict the assumption that $T$ is an MST.
+        
+        \item Therefore, $(u, v)$ must be the lightest edge crossing the cut $(A, B)$.
+    \end{enumerate}
+
+    Hence, if an edge $(u, v)$ is contained in a minimum spanning tree, it must be a light edge crossing some cut of the graph. 
+\end{proof}
+
+\noindent{\bf Problem 2: } (15 points)
+\vs\
+
+Let $G = (V,E,W)$ is a weighted connected (undirected) graph where all edges have distinct weights.Use proof by contradiction to prove that the Minimum Spanning Tree of $G$ is unique. 
+
+\begin{proof} (by contradiction)
+    Suppose there are two different MSTs, $T_1$ and $T_2$, for the graph $G = (V, E, W)$. Since they are both MSTs of $G$, they are both both minimum spanning trees, they must have the same total weight.
+    
+    \begin{enumerate}
+        \item Since $T_1$ and $T_2$ are different, there must be at least one edge $e$ that is in $T_1$ but not in $T_2$. Let us assume that $e \in T_1$ but $e \notin T_2$.
+        
+        \item Since a tree with $n$ vertices has exactly $n-1$ edges, and adding one more edge forms a cycle, adding $e$ to $T_2$ creates a cycle. Let this cycle be $C$. 
+        
+        \item Since $e \notin T_2$, there must be at least one other edge $e'$ in the cycle $C$ that is present in $T_2$ but not in $T_1$ (otherwise $T_2$ would have included $e$). Therefore, $e'$ is an edge in both the cycle $C$ and in $T_2$, but it is not in $T_1$.
+        
+        \item Because all edge weights are distinct, one of the edges in $C$ must be the lightest. Consider two cases:
+        \begin{itemize}
+            \item If $e$ is the lightest edge in $C$, then it should have been in $T_2$ instead of $e'$, because MSTs choose the lightest edges to avoid cycles.
+            \item If $e'$ is the lightest edge in $C$, then removing $e$ from $T_1$ and replacing it with $e'$ would give a tree with a smaller total weight than $T_1$, contradicting the fact that $T_1$ is an MST.
+        \end{itemize}
+        
+        \item In either case, we reach a contradiction: the existence of two different MSTs implies that one of them is not actually an MST.
+    \end{enumerate}
+    
+    Therefore, if all edge weights are distinct, the MST of $G$ must be unique.
+\end{proof}
+
+\noindent{\bf Problem 3: } (15 points)
+\vs\
+
+Let $G = (V,E,W)$ is a weighted connected (undirected) graph where all edges have distinct weights. Use induction on $|V|=n$, to prove that the Minimum Spanning Tree of $G$ is unique for all $n \geq 1$. 
+
+\begin{proof} (by induction on $n = |V|$)
+    \begin{itemize}
+        \item \textbf{Base case:} When $n = 1$, the graph $G$ has only one vertex and no edges. Therefore, the minimum spanning tree is trivially unique.
+        \item \textbf{Inductive hypothesis:} Assume that for any graph $G' = (V', E', W')$ with $|V'| = k$ vertices, where all edge weights are distinct, the minimum spanning tree of $G'$ is unique.
+        \item \textbf{Inductive step:} Now, consider any tree $T_1$ of a graph $G = (V, E, W)$ with $k+1$ vertices, where all edge weights are distinct.
+        \begin{enumerate}
+            \item Remove a vertex $v$ from $T_1$. The resulting subgraph $G'$ has $k$ vertices.
+            \item By the inductive hypothesis, the minimum spanning tree of $G'$ is unique. Let $T'$ be this unique MST.
+            \item Consider the edges that connect $v$ to the vertices of $T'$. Since all edge weights are distinct, there is a unique lightest edge, say $e$, that connects $v$ to $T'$.
+            \item Check if $T_1$ contains the edge $e$. If $T_1$ contains $e$, then it must be the MST because it includes the lightest edge connecting $v$ to the rest of the tree. If $T_1$ does not contain $e$, then replacing any heavier edge in $T_1$ with $e$ would produce a spanning tree with a smaller total weight, contradicting the assumption that $T_1$ is the MST.
+            \item Therefore, $T_1$ must include the edge $e$, and combined with the uniqueness of $T'$ by the inductive hypothesis, this means that the minimum spanning tree of $G$ is also unique.
+        \end{enumerate}
+        \item \textbf{Conclusion:} By the principle of mathematical induction, the minimum spanning tree of $G$ is unique for all $n \geq 1$ when all edge weights are distinct.
+    \end{itemize}
+
+\end{proof}
+\end{document}

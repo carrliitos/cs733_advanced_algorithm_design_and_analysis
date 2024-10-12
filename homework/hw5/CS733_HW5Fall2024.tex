@@ -1,0 +1,83 @@
+\documentclass[12pt]{article}
+%\pagestyle{empty} 
+\usepackage{amsmath}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{epsfig}
+
+\newcommand{\vs}{\vspace{2mm}}
+\newcommand{\ls}{\vspace{5mm}} 
+
+\newcommand{\ms}{\vspace{3mm}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\sm}{\small}
+\newcommand{\hs}{\hspace{10mm}}
+\newcommand{\ha}{\hspace{1mm}}
+\newcommand{\bo}{\rule{2mm}{3mm}}
+\textheight=680pt
+\textwidth=460pt
+\hoffset=-50pt
+\voffset=-50pt
+%\topmargin=-0.5in
+%\textheight=10in
+%\oddsidemargin=0.125in
+%\evensidemargin=0.125in
+%\textwidth=7.5in
+\begin{document}
+\bc\ 
+ { \bf Homework 5 (50 points) }  Due: October 11, 2024 11:59 pm\\
+ { \bf COMPSCI 733: Advanced Algorithms and Designs } \\ 
+\ec\
+\ls\
+\noindent{\bf Documentation:} (5 points)
+Type your solutions using Latex \\
+(www.overleaf.com or https://www.latex-project.org/ ). Submit your solutions (pdf is enough)  to Canvas. 
+
+\vs\
+
+\noindent{\bf Problem 1: } (15 points)
+\vs\
+
+Prove that if an edge $(u,v)$ is contained in some minimum spanning tree, then it is
+a light edge crossing some cut of the graph.
+\vs\
+
+\begin{proof}   
+Your proof goes here.
+\end{proof}
+
+\noindent{\bf Problem 2: } (15 points)
+\vs\
+
+Let  $G = (V,E,W)$ is a weighted connected (undirected) graph where all edges have distinct weights.Use proof by contradiction to prove that the Minimum Spanning Tree of $G$ is unique. 
+
+\begin{proof} (by contradiction)
+Suppose there are two different MSTs, $T_1$ and $T_2$. 
+
+Complete the proof by getting a contradiction.
+\end{proof}
+
+
+\noindent{\bf Problem 3: } (15 points)
+\vs\
+
+Let  $G = (V,E,W)$ is a weighted connected (undirected) graph where all edges have distinct weights.Use induction on $|V|=n$, to prove that the Minimum Spanning Tree of $G$ is unique for all $n \geq 1$. 
+
+\begin{proof} (by induction on $n$)
+
+    \begin{itemize}
+    \item Prove the base case.
+    \item Write the inductive hypothesis ($n=k$).
+    \item Prove the inductive step. (Hint: Start with any tree with $n= k+1$ vertices.)
+    \item Conclusion. 
+    \end{itemize}
+
+\end{proof}
+
+\end{document}
