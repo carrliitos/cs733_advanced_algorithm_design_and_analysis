@@ -1,0 +1,214 @@
+3. Prim's algorithm starts from:
+
+1. A random vertex in the graph
+2. The vertex with the smallest degree
+3. The vertex with the highest weight
+4. The vertex with the lowest edge weight
+
+Answer 1.
+
+4. In Kruskal's Algorithm, how are the edges sorted?
+
+1. By the number of adjacent vertices
+2. By increasing edge weights
+3. By decreasing vertex weights
+4. By increasing vertex degree
+
+Answer 2.
+
+5. Which data structure is commonly used in Prim's Algorithm to efficiently pick the next edge with the minimum weight?
+
+1. Hash Table
+2. Priority Queue (Min-Heap)
+3. Queue
+4. Stack
+
+Answer 2.
+
+6. What is the primary difference between BFS and DFS?
+
+1. BFS uses a stack, and DFS uses a queue.
+2. BFS and DFS are identical in terms of traversal order.
+3. BFS finds the shortest path in weighted graphs, while DFS finds the longest path.
+4. BFS explores all neighbors of a node before moving to the next level, while DFS explores as far as possible down one path before backtracking.
+
+Answer 4.
+
+7. Which data structure is used to implement Breadth-First Search (BFS)?
+
+1. Priority Queue
+2. Queue
+3. Binary search Tree
+4. Stack
+
+Answer 2.
+
+8. What is the time complexity of DFS and BFS when applied to a graph with V vertices and E edges?
+
+1. O(VE)
+2. O(V^2)
+3. O(E^2)
+4. O(V + E)
+
+Answer 4.
+
+9. Which of the following is true for Depth-First Search (DFS)?
+
+1. DFS is implemented using a queue.
+2. DFS always finds the shortest path in an unweighted graph.
+3. DFS can be used to detect cycles in a graph.
+4. None of the other answers.
+
+Answer 3.
+
+10. What is the Big-Theta  time complexity of the following code?
+```
+for (int i = 0; i < n; i++)
+  for (int j = 0; j < n/2; j++)
+    sum++;
+```
+
+1. Theta(n^2)
+2. Theta(n)
+3. Theta(n^3)
+4. Theta(n/2)
+
+Answer 1.
+
+11. In the recurrence relation T(n) = aT(n/b) + O(n^2), what does the term O(n^2) represent?
+
+1. The cost of dividing the problem into subproblems
+2. The cost of combining the solutions of the subproblems
+3. The cost of solving the subproblems recursively
+4. The number of subproblems
+
+Answer 2.
+
+12. Big-O notation is used to describe which of the following aspects of an algorithm?
+
+1. The exact running time of the algorithm for a specific input size
+2. The lower bound of the algorithm's memory usage
+3. The upper bound of an algorithm's running time as the input size grows
+4. The average case performance of an algorithm
+
+Answer 3.
+
+13. A bipartite graph cannot contain which of the following?
+
+1. An odd-length cycle
+2. A Hamiltonian cycle
+3. An even-length cycle
+4. A perfect matching
+
+Answer 1
+
+14. A graph is bipartite if:
+
+1. It contains an odd-length cycle.
+2. All edges connect vertices of the same set.
+3. Its vertices can be divided into two sets such that no two vertices within the same set are adjacent.
+4. Every vertex has the same degree.
+
+Answer 3.
+
+15. What is a Minimum Spanning Tree (MST) in a simple weighted connected graph?
+
+1. A spanning tree where the sum of the vertex values is minimized.
+2. A spanning tree where the number of edges is minimized.
+3. A spanning tree where the degree of each vertex is minimized.
+4. A spanning tree where the sum of the edge weights is minimized.
+
+Answer 4. 
+
+16. The Master Theorem is primarily used to solve which type of recurrences?
+
+1. Divide-and-conquer recurrences
+2. Linear recurrences
+3. Exponential recurrences
+4. Polynomial recurrences
+
+Answer 1.
+
+17. What is the time complexity of the Merge Sort algorithm in the worst case?
+
+1. O(n^2)
+2. O(nlogn)
+3. O(nlogn^2 )
+4. O(n)
+
+Answer 2.
+
+18. How does Insertion Sort place elements in their correct position in the array (non-decreasing order)?
+
+1. By comparing each element with a pivot
+2. By repeatedly dividing the array into halves
+3. By selecting the largest element and placing it at the end
+4. By shifting larger elements to the right and inserting the current element in its correct position
+
+Answer 4. 
+
+19. What is the Big-Theta  time complexity of the following code?
+```
+while(n > 1)
+  n= n/2;
+```
+
+1. Theta(n^2)
+2. Theta(n)
+3. Theta(log n)
+4. none of the oter answers.
+
+Answer 3.
+
+20. Which of the following algorithms is used to find the Minimum Spanning Tree of a graph?
+
+1. Floyd-Warshall Algorithm
+2. Kruskal's Algorithm
+3. Bellman-Ford Algorithm
+4. Dijkstra's Algorithm
+
+Answer 2.
+
+21. What is the minimum number of edges required to make a simple connected graph with n vertices?
+
+1. n
+2. n/2
+3. 2n
+4. n-1
+
+Answer 4.
+
+22. In an undirected graph, the sum of the degrees of all vertices is equal to:
+
+1. The product of the number of edges and vertices
+2. Twice the number of edges
+3. Half the number of edges
+4. The number of vertices
+
+Answer 2. 
+
+23. In a Minimum Spanning Tree, which of the following statements is true?
+
+1. The MST minimizes the total edge weight of the tree.
+2. The MST can contain cycles.
+3. The MST is unique for every graph.
+4. The MST includes all edges of the original graph.
+
+Answer 1.
+
+24. n = O(n^(0.9999999) log(n)).
+
+True
+False
+
+Answer False.
+
+25. Which of the following statements accurately compares Prim's and Kruskal's algorithms for finding a Minimum Spanning Tree (MST)?
+
+1. Prim's algorithm always starts with the minimum edge, while Kruskal's algorithm starts with any edge.
+2. Prim's algorithm builds the MST by adding edges to an existing tree, while Kruskal's algorithm adds edges from the graph to the MST in increasing order of weight.
+3. Both algorithms require the graph to be represented as an adjacency matrix.
+4. Prim's algorithm is more efficient for sparse graphs, whereas Kruskal's algorithm works better for dense graphs.
+
+Answer 2
+
