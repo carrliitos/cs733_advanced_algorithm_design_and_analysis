@@ -6,6 +6,7 @@
 \usepackage{color}
 \usepackage{graphicx}
 \usepackage{epsfig}
+\usepackage{algpseudocode}
 \usepackage{algorithm}
 
 \newcommand{\vs}{\vspace{2mm}}
@@ -37,7 +38,8 @@ Type your solutions using Latex \\
 (www.overleaf.com or https://www.latex-project.org/ ). You may insert the images of hand-drawn figures. Submit your solutions (pdf is enough)  to Canvas. 
 \ls\
 
-\noindent{\bf Problem 1: } (15 points)
+\noindent{\bf Problem 1: } (15 points) 
+\vs\
 
 Prove (i.e., using the definitions), or disprove (i.e., using contradiction or with a counterexample).
 
@@ -49,46 +51,61 @@ Prove (i.e., using the definitions), or disprove (i.e., using contradiction or w
     \item[(e)] $n  = O(n^{0.9999999} \log (n))$.
 \end{itemize}
 
+\noindent{\bf Problem 2: }(15 points) 
 \vs\
 
-\noindent{\bf Problem 2: }(15 points)
 Let $G$ be a connected graph with $n$ vertices.
 
 \begin{itemize}
     \item[(a)] Prove by induction that $G$ contains a spanning tree.
-    \item[(b)] Prove that if $G$ has $n$ or more edges, then $G$ contains a cycle.(Hint: Use Part (a) and a tree of $n$ vertices has $n-1$ edges). 
+    \item[(b)] Prove that if $G$ has $n$ or more edges, then $G$ contains a cycle. (Hint: Use Part (a) and a tree of $n$ vertices has $n-1$ edges). 
 \end{itemize}
 
 \vs\
 
 \noindent{\bf Problem 3: }(15 points)
+\vs\
+
 Step through the following DFS algorithm (CLRS textbook) for the following given graph with the starting vertex "A" and fill in the entries in the given table as shown in the class lecture. You need to show any intermediate values too.
 
-DFS($G,s$) \\
-1 \ha\ for each vertex $u \in G.V $\\
-2 \ha\ \ha\ $u.color = WHITE$ \\
-3 \ha\ \ha\  $u.\pi = Nil$ \\
-4 \ha\  $time=0$ \\
-5 \ha\  for each vertex $u \in G.V $\\
-6 \ha\ \ha\  if $ u.color == WHITE$ \\
-7 \ha\ \ha\ \ha\ $DFS-VISIT(G,u)$ \\ \\
+\begin{algorithm}
+    \caption{DFS($G$, $s$)}
+    \begin{algorithmic}[1]
+        \For{each vertex $u \in G.V$}
+            \State $u.color \gets \text{WHITE}$
+            \State $u.\pi \gets \text{NIL}$
+        \EndFor
+        \State $time \gets 0$
+        \For{each vertex $u \in G.V$}
+            \If{$u.color == \text{WHITE}$}
+                \State $DFS-VISIT(G, u)$
+            \EndIf
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+\begin{algorithm}
+    \caption{DFS-VISIT($G$, $u$)}
+    \begin{algorithmic}[1]
+        \State $time \gets time + 1$
+        \State $u.d \gets time$
+        \State $u.color \gets \text{GRAY}$
+        \For{each $v \in Adj[u]$}
+            \If{$v.color == \text{WHITE}$}
+                \State $v.pi \gets u$
+                \State $DFS-VISIT(G, v)$
+            \EndIf
+        \EndFor
+        \State $u.color \gets \text{BLACK}$
+        \State $time \gets time + 1$
+        \State $u.f \gets time$
+    \end{algorithmic}
+\end{algorithm}
 
-
-$DFS-VISIT(G,u)$ \\
-1 \ha\ $time = time + 1$ \\
-2 \ha\ $u.d = time$ \\
-3 \ha\ $u.color = GRAY$ \\
-4 \ha\ for each $v \in Adj[u] $ \\
-5  \ha\ \ha\ if $v.color == WHITE$ \\
-6 \ha\ \ha\ \ha\ $v.\pi= u$\\
-7  \ha\ \ha\ \ha\ $DFS-VISIT(G,v)$ \\
-8 \ha\  $u.color = BLACK$ \\
-9 \ha\  $ time= time+1 $\\
-9 \ha\  $ u.f = time $\\ \\
+\pagebreak
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[scale=.74]{graph-image-v1.jpg}
+    \includegraphics[scale=.74]{Exams/graph-image-v1-1.jpg}
 \end{figure}
 
 \begin{tabular}{|c|c|c|c|c|} \hline
@@ -118,7 +135,7 @@ Consider the following graph.
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=.74]{graph-prims-kruksal.png}
+\includegraphics[scale=.74]{Exams/graph-prims-kruksal.png}
 \end{figure}
 
 
@@ -128,19 +145,15 @@ Consider the following graph.
 \end{itemize}
 
 \noindent{\bf Problem 5: }(15 points)
-\begin{itemize}
-    \item[1)]  Let $G = (V,E,W)$ be a weighted connected (undirected) graph, where $V$ is the set of vertices, $E$ is the set of edges, $w_e \in W$ for each $e \in E$ is a nonnegative weight of the edge $e$. A spanning tree is defined as usual, namely $T = (V, T_E)$ where $T_E$ is a subset of  $E$ and $T$ is a tree. The width of a spanning tree $T$ is max $\{w_e | e \in T_E \}$.  Thus it is the most “expensive” edge in the tree. $T$ is a Minimum width spanning tree of $G$ if it is a spanning tree and achieves the minimum width among all spanning trees of $G.$ 
-    \begin{itemize} 
-        \item[(a)] Prove that any minimum spanning tree of $G$ is also a minimum width spanning tree of $G$. (Hint: You may use proof by contradiction.)
-        \item[(b)] Show with an example that even if the weights of $G = (V,E,W)$ are all distinct, there could be more than one minimum width spanning tree.
-    \end{itemize}
+\vs\
+
+Let $G = (V,E,W)$ be a weighted connected (undirected) graph, where $V$ is the set of vertices, $E$ is the set of edges, $w_e \in W$ for each $e \in E$ is a nonnegative weight of the edge $e$. A spanning tree is defined as usual, namely $T = (V, T_E)$ where $T_E$ is a subset of  $E$ and $T$ is a tree. The width of a spanning tree $T$ is max $\{w_e | e \in T_E \}$.  Thus it is the most “expensive” edge in the tree. $T$ is a Minimum width spanning tree of $G$ if it is a spanning tree and achieves the minimum width among all spanning trees of $G.$ 
+\begin{itemize} 
+    \item[(a)] Prove that any minimum spanning tree of $G$ is also a minimum width spanning tree of $G$. (Hint: You may use proof by contradiction.)
+    \item[(b)] Show with an example that even if the weights of $G = (V,E,W)$ are all distinct, there could be more than one minimum width spanning tree.
 \end{itemize}
-
 \vs\
 
-\pagebreak
-
-\vs\
 \noindent{\bf Problem 6: }(15 points)
 \vs\
 
@@ -148,15 +161,13 @@ Consider the following graph.
     \item[(a)] Draw a weighted graph that has exactly 5 different minimum spanning trees. Explain how you get the count.
     \item[(b)] Draw a weighted graph that has exactly 25 different minimum spanning trees. Explain how you get the count.
 \end{itemize}
-
-
 \vs\
+
 \noindent{\bf Problem 10: }(15 points)
 \vs\
 
-Consider the collection of all undirected graphs with 10 nodes and 6 edges. Let M and m, respectively, be the
-maximum and minimum number of connected components in any graph in the collection. If a graph has no selfloops
-and there is at most one edge between any pair of nodes, which of the following is true? 
+Consider the collection of all undirected graphs with 10 nodes and 6 edges. Let M and m, respectively, be the maximum and minimum number of connected components in any graph in the collection. If a graph has no selfloops and there is at most one edge between any pair of nodes, which of the following is true? 
+
 \begin{itemize}
     \item[(A)] M = 10, m = 10
     \item[(B)] M = 10, m = 1
