@@ -8,7 +8,12 @@
 \usepackage{epsfig}
 \usepackage{algpseudocode}
 \usepackage{algorithm}
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{tikz}
 
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
 \newcommand{\vs}{\vspace{2mm}}
 \newcommand{\ls}{\vspace{5mm}}
 \newcommand{\ms}{\vspace{3mm}}
@@ -34,8 +39,7 @@
 \ec\
 \ls\
 \noindent{\bf Documentation:} (5 points)
-Type your solutions using Latex \\
-(www.overleaf.com or https://www.latex-project.org/ ). You may insert the images of hand-drawn figures. Submit your solutions (pdf is enough)  to Canvas. 
+Type your solutions using Latex (www.overleaf.com or https://www.latex-project.org/ ). You may insert the images of hand-drawn figures. Submit your solutions (pdf is enough) to Canvas.
 \ls\
 
 \noindent{\bf Problem 1: } (15 points) 
@@ -44,12 +48,100 @@ Type your solutions using Latex \\
 Prove (i.e., using the definitions), or disprove (i.e., using contradiction or with a counterexample).
 
 \begin{itemize}
-    \item[(a)] $ f(n)= O(g(n))$ implies that $g(n) = O(f(n)).$
-    \item[(b)] If $f(n) = O(g(n))$ and $g(n) = O(h(n))$ then $f(n) = O(h(n)).$
-    \item[(c)] $f(n)+g(n) = \Theta(\min(f(n), g(n))).$
-    \item[(d)] $f(n)= O(g(n))$ implies $2^{f(n)} = O(2^{g(n)}).$
-    \item[(e)] $n  = O(n^{0.9999999} \log (n))$.
+    \item[(a)] $f(n) = O(g(n))$ implies that $g(n) = O(f(n)).$ \\
+        \textbf{Answer: }We aim to disprove the claim that if \( f(n) = O(g(n)) \), then \( g(n) = O(f(n)) \). \\
+        The definition of Big-O notation is as follows:
+        \[f(n) = O(g(n)) \iff \exists \, c > 0, n_0 > 0 \text{ such that } 0 \leq f(n) \leq c \cdot g(n) \text{ for all } n \geq n_0.\]
+        To disprove the statement, we will provide a \textbf{counterexample}.
+        \begin{proof} (By counterexample.) Let us consider the following functions:
+            \[f(n) = n \quad \text{and} \quad g(n) = n^2.\]
+            First, we check if \( f(n) = O(g(n)) \). By the definition of Big-O, we need to show that there exist constants \( c > 0 \) and \( n_0 \) such that: \[n \leq c \cdot n^2 \quad \text{for all} \quad n \geq n_0.\] Dividing both sides by \( n \) (assuming \( n > 0 \)): \[1 \leq c \cdot n.\]
+            This inequality is true for \( n \geq 1 \) if we choose \( c = 1 \). Thus, \( f(n) = n \) is indeed \( O(n^2) \).
+            Now, we check if \( g(n) = O(f(n)) \). We need to check if there exist constants \( c' > 0 \) and \( n_0' \) such that: \[n^2 \leq c' \cdot n \quad \text{for all} \quad n \geq n_0'.\] Dividing both sides by \( n \) (assuming \( n > 0 \)): \[n \leq c',\] which is clearly false for large \( n \) because \( n \) grows without bound. Therefore, \( g(n) = n^2 \) is \emph{not} \( O(n) \).
+        \end{proof}
+        \newpage
+        
+    \item[(b)] If $f(n) = O(g(n))$ and $g(n) = O(h(n))$ then $f(n) = O(h(n)).$ \\
+        \textbf{Answer: }We aim to prove this statement using the definition of Big-O notation. \\
+        By definition, \( f(n) = O(g(n)) \) means that there exist some constants \( c_1 > 0 \) and \( n_1 > 0 \) such that:
+        \[ |f(n)| \leq c_1 \cdot |g(n)| \quad \text{for all} \quad n \geq n_1. \]
+        Similarly, \( g(n) = O(h(n)) \) means that there exist constants \( c_2 > 0 \) and \( n_2 > 0 \) such that:
+        \[ |g(n)| \leq c_2 \cdot |h(n)| \quad \text{for all} \quad n \geq n_2. \]
+        Now, we need to show that \( f(n) = O(h(n)) \), meaning there exist constants \( c_3 > 0 \) and \( n_3 > 0 \) such that:
+        \[ |f(n)| \leq c_3 \cdot |h(n)| \quad \text{for all} \quad n \geq n_3. \]
+        \begin{proof}
+            Since \( |f(n)| \leq c_1 \cdot |g(n)| \) for \( n \geq n_1 \), and \( |g(n)| \leq c_2 \cdot |h(n)| \) for \( n \geq n_2 \), we can substitute the second inequality into the first:
+            \[ |f(n)| \leq c_1 \cdot |g(n)| \leq c_1 \cdot c_2 \cdot |h(n)|. \]
+            Thus, we have:
+            \[ |f(n)| \leq c_3 \cdot |h(n)| \quad \text{where} \quad c_3 = c_1 \cdot c_2. \]
+            Now, let \( n_3 = \max(n_1, n_2) \), ensuring both conditions hold for all \( n \geq n_3 \). Therefore, we have shown that there exist constants \( c_3 = c_1 \cdot c_2 \) and \( n_3 = \max(n_1, n_2) \) such that:
+            \[ |f(n)| \leq c_3 \cdot |h(n)| \quad \text{for all} \quad n \geq n_3. \]
+            Hence, \( f(n) = O(h(n)) \).
+        \end{proof}
+        \newpage
+    
+    \item[(c)] $f(n)+g(n) = \Theta(\min(f(n), g(n))).$ \\
+        \textbf{Answer: }We disprove the statement by providing a counterexample.
+        \begin{proof} (By counterexample.) Let \( f(n) = n \) and \( g(n) = n^2 \).
+            In this case, the sum of the two functions is:
+            \[ f(n) + g(n) = n + n^2. \]
+            The minimum of the two functions is:
+            \[ \min(f(n), g(n)) = \min(n, n^2) = n. \]
+            Now, we check if \( f(n) + g(n) = \Theta(\min(f(n), g(n))) \). This would mean there exist constants \( c_1, c_2 > 0 \) and an integer \( n_0 \) such that for all \( n \geq n_0 \):
+            \[ c_1 \cdot n \leq n + n^2 \leq c_2 \cdot n. \]
+
+            \textbf{Upper bound:} We first check if the upper bound \( n + n^2 \leq c_2 \cdot n \) holds for large \( n \). For large \( n \), \( n^2 \) dominates \( n \), so \( n + n^2 \) grows like \( n^2 \), which cannot be bounded by \( c_2 \cdot n \) for any constant \( c_2 \). Therefore, the upper bound fails.
+
+            \textbf{Lower bound:} The lower bound \( n + n^2 \geq c_1 \cdot n \) holds for sufficiently large \( n \), since \( n^2 \) is positive and dominates \( n \), ensuring that \( n + n^2 \geq c_1 \cdot n \).
+
+            Since the upper bound fails, we conclude that \( f(n) + g(n) \neq \Theta(\min(f(n), g(n))) \). Therefore, the original statement is false.
+        \end{proof}
+        \newpage
+
+    \item[(d)] $f(n)= O(g(n))$ implies $2^{f(n)} = O(2^{g(n)}).$ \\
+        \textbf{Answer:} We disprove the statement by providing a counterexample.
+        \begin{proof} (By counterexample.) Let \( f(n) = n \) and \( g(n) = \frac{n}{2} \).
+        \begin{itemize}
+            \item[(1.)] Check if \( f(n) = O(g(n)) \). \\
+            We need to show that there exist constants \( c > 0 \) and \( n_0 \geq 0 \) such that for all \( n \geq n_0 \),
+            \[ f(n) \leq c \cdot g(n). \] 
+            Substituting \( f(n) = n \) and \( g(n) = \frac{n}{2} \), we get:
+            \[ n \leq c \cdot \frac{n}{2}, \]
+            which simplifies to:
+            \[ 2 \leq c. \]
+            This holds for \( c = 2 \), so \( f(n) = O(g(n)) \).
+            \item[(2.)] Check if \( 2^{f(n)} = O(2^{g(n)}) \). \\
+            We need to check whether there exist constants \( c' > 0 \) and \( n_0' \geq 0 \) such that for all \( n \geq n_0' \),
+            \[ 2^{f(n)} \leq c' \cdot 2^{g(n)}. \]
+            Substituting \( f(n) = n \) and \( g(n) = \frac{n}{2} \), we get:
+            \[ 2^n \leq c' \cdot 2^{n/2}. \]
+            Dividing both sides by \( 2^{n/2} \), we get:
+            \[ 2^{n/2} \leq c'. \]
+            As \( n \to \infty \), \( 2^{n/2} \) grows without bound, which means no constant \( c' \) can satisfy this inequality for large \( n \). Therefore, \( 2^n \neq O(2^{n/2}) \).
+        \end{itemize}
+        Therefore, the statement $f(n)= O(g(n))$ implies $2^{f(n)} = O(2^{g(n)})$ is false, as shown by the counterexample \( f(n) = n \) and \( g(n) = \frac{n}{2} \).
+        \end{proof}
+        \newpage
+    
+    \item[(e)] $n = O(n^{0.9999999} \log (n))$. \\
+        \textbf{Answer: } The statement \( n = O(n^{0.9999999} \log n) \) is false.
+        \begin{proof}
+            Suppose, for contradiction, that \( n = O(n^{0.9999999} \log n) \). This would mean that there exist constants \( c > 0 \) and \( n_0 \geq 0 \) such that for all \( n \geq n_0 \),
+            \[ n \leq c \cdot n^{0.9999999} \log n. \]
+            Dividing both sides by \( n^{0.9999999} \), we get:
+            \[ n^{0.0000001} \leq c \cdot \log n. \]
+
+            Then, consider the growth rates of \( n^{0.0000001} \) and \( \log n \) as \( n \to \infty \):
+            \begin{itemize}
+                \item[] \( n^{0.0000001} \) grows asymptotically faster than \( \log n \), since even a small power of \( n \) grows faster than the logarithmic function.
+            \end{itemize}
+            Thus, for sufficiently large \( n \), \( n^{0.0000001} \) exceeds \( c \cdot \log n \), which contradicts the assumption that \( n \leq c \cdot n^{0.9999999} \log n \). 
+            
+            Therefore, the assumption that \( n = O(n^{0.9999999} \log n) \) is false.
+        \end{proof}
+        \newpage
 \end{itemize}
+\vs\
 
 \noindent{\bf Problem 2: }(15 points) 
 \vs\
@@ -58,16 +150,61 @@ Let $G$ be a connected graph with $n$ vertices.
 
 \begin{itemize}
     \item[(a)] Prove by induction that $G$ contains a spanning tree.
+    \begin{theorem}
+        Let \( G \) be a connected graph with \( n \) vertices. Then, \( G \) contains a spanning tree.
+    \end{theorem}
+    \begin{proof} We will prove this statement by induction on the number of vertices \( n \) in the connected graph \( G \).
+    \begin{itemize}
+        \item[] \textbf{Base Case:} \( n = 1 \) \\
+        If \( G \) has only one vertex and no edges, it trivially contains a spanning tree. In this case, the single vertex itself is a spanning tree with no edges, since there are no other vertices to connect. Hence, the graph contains a spanning tree.
+        \item[] \textbf{Inductive hypothesis:} Assume that for any connected graph with \( k \) vertices (where \( k \geq 1 \)), there exists a spanning tree. This means that for any connected graph with \( k \) vertices, we can find a subgraph that includes all the vertices of \( G \) and is a tree (i.e., connected and acyclic).
+        \item[] \textbf{Inductive step:} Now, we consider a connected graph \( G \) with \( n = k+1 \) vertices. We need to show that \( G \) contains a spanning tree. 
+        \begin{itemize}
+            \item[1.] \textbf{Remove a vertex and edge connections:}
+            \begin{itemize}
+                \item Select any vertex \( v \) in \( G \) and remove it from the graph, along with all edges connected to \( v \).
+                \item The resulting graph \( G' \) has \( k \) vertices and remains connected (since removing a single vertex from a connected graph cannot disconnect it as long as there are still connections between other vertices).
+            \end{itemize}
+            \item[2.] \textbf{Apply the inductive hypothesis:}
+            \begin{itemize}
+                \item By the inductive hypothesis, the smaller graph \( G' \), with \( k \) vertices, contains a spanning tree \( T' \) (i.e., a connected, acyclic subgraph that spans all \( k \) vertices of \( G' \)).
+            \end{itemize}
+            \item[3.] \textbf{Reconnect the removed vertex: }
+            \begin{itemize}
+                \item Now, add back the vertex \( v \) and one of its edges to any vertex in the spanning tree \( T' \). Since \( G \) is connected, such an edge must exist.
+                \item By adding this edge, we ensure that the vertex \( v \) is now connected to the spanning tree \( T' \), and since we only added one edge, the resulting graph remains acyclic.
+            \end{itemize}
+        \end{itemize}
+        Thus, the graph \( G \) with \( n = k+1 \) vertices contains a spanning tree.
+        \item[] \textbf{Conclusion:} By induction, we have shown that every connected graph with \( n \) vertices contains a spanning tree. 
+    \end{itemize}
+    \end{proof}
+    \newpage
     \item[(b)] Prove that if $G$ has $n$ or more edges, then $G$ contains a cycle. (Hint: Use Part (a) and a tree of $n$ vertices has $n-1$ edges). 
+    \begin{theorem}
+        Let \( G \) be a connected graph with \( n \) vertices and \( m \geq n \) edges. Then, \( G \) contains a cycle.
+    \end{theorem}
+    \begin{proof} We will use the result from Part (a), which states that every connected graph with \( n \) vertices contains a spanning tree.
+    \begin{itemize}
+        \item[Step 1:] \textbf{Existence of a spanning tree (from Part (a)).} \\
+        By the result from Part (a), we know that \( G \), being a connected graph with \( n \) vertices, contains a spanning tree \( T \). A spanning tree is a connected, acyclic subgraph that includes all \( n \) vertices of \( G \) and has exactly \( n-1 \) edges (as every spanning tree of \( n \) vertices does).
+        \item[Step 2:] \textbf{Analyze the number of edges in \( G \).} \\
+        Since \( G \) is given to have \( m \geq n \) edges, it must have more edges than the spanning tree \( T \), which has exactly \( n-1 \) edges.
+        \item[Step 3:] \textbf{Adding extra edges creates a cycle.} \\
+        The spanning tree \( T \) already spans all the vertices of \( G \), meaning it connects all \( n \) vertices without any cycles. 
+        Now, consider any extra edges in \( G \) (there are at least one because \( m \geq n \)). Each extra edge must connect two vertices that are already connected in the spanning tree \( T \) because the tree spans all vertices. \\
+        
+        Adding such an extra edge creates a cycle, as it introduces an additional path between two vertices that already have a unique path in the spanning tree.
+    \end{itemize}
+    Since adding any edge to a spanning tree creates a cycle, \( G \), which has \( n \) or more edges, must contain at least one cycle.
+    \end{proof}
 \end{itemize}
-
-\vs\
+\newpage
 
 \noindent{\bf Problem 3: }(15 points)
 \vs\
 
 Step through the following DFS algorithm (CLRS textbook) for the following given graph with the starting vertex "A" and fill in the entries in the given table as shown in the class lecture. You need to show any intermediate values too.
-
 \begin{algorithm}
     \caption{DFS($G$, $s$)}
     \begin{algorithmic}[1]
@@ -83,6 +220,7 @@ Step through the following DFS algorithm (CLRS textbook) for the following given
         \EndFor
     \end{algorithmic}
 \end{algorithm}
+
 \begin{algorithm}
     \caption{DFS-VISIT($G$, $u$)}
     \begin{algorithmic}[1]
@@ -101,48 +239,493 @@ Step through the following DFS algorithm (CLRS textbook) for the following given
     \end{algorithmic}
 \end{algorithm}
 
-\pagebreak
-
 \begin{figure}[!h]
     \centering
     \includegraphics[scale=.74]{Exams/graph-image-v1-1.jpg}
 \end{figure}
 
-\begin{tabular}{|c|c|c|c|c|} \hline
-  Vertex  &  \ha\  Color  \ha\ &   Discovery Time  & \ha\ Predecessor \ha\  & Finishing Time \\
-  $u$ & $u.color$ & $u.d$ & $u.\pi$ & $ u.f$\\ \hline
-  A & & & & \\ \hline
-  B & & & &\\ \hline
-  C & & & &\\ \hline
-  D & & & &\\ \hline
-  E & & & & \\ \hline
-  F & & & &\\ \hline
-  G & & & &\\ \hline
-  H & & & &\\ \hline
-  I & & & &\\ \hline
+\newpage
+\noindent{Intialization}
+% Initialization
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & WHITE & - & NIL & - \\ \hline
+    B & WHITE & - & NIL & - \\ \hline
+    C & WHITE & - & NIL & - \\ \hline
+    D & WHITE & - & NIL & - \\ \hline
+    E & WHITE & - & NIL & - \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & WHITE & - & NIL & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & WHITE & - & NIL & - \\ \hline
 \end{tabular}
-
-\vs\
 \vs\
 
+\noindent{Visit A}
+% Step 1: Visit A
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & WHITE & - & NIL & - \\ \hline
+    C & WHITE & - & NIL & - \\ \hline
+    D & WHITE & - & NIL & - \\ \hline
+    E & WHITE & - & NIL & - \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & WHITE & - & NIL & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & WHITE & - & NIL & - \\ \hline
+\end{tabular}
+\vs\
 
-\pagebreak
+% Step 2: Visit B
+\noindent{Visit B}
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & WHITE & - & NIL & - \\ \hline
+    D & WHITE & - & NIL & - \\ \hline
+    E & WHITE & - & NIL & - \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & WHITE & - & NIL & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & WHITE & - & NIL & - \\ \hline
+\end{tabular}
+\vs\
 
+\noindent{Visit C}
+% Step 3: Visit C
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & WHITE & - & NIL & - \\ \hline
+    E & WHITE & - & NIL & - \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & WHITE & - & NIL & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & WHITE & - & NIL & - \\ \hline
+\end{tabular}
+\vs\
+\newpage
+\noindent{Visit I}
+% Step 4: Visit I
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & WHITE & - & NIL & - \\ \hline
+    E & WHITE & - & NIL & - \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & WHITE & - & NIL & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & GRAY & 4 & C & - \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Visit D}
+% Step 5: Visit D
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & GRAY & 5 & I & - \\ \hline
+    E & WHITE & - & NIL & - \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & WHITE & - & NIL & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & GRAY & 4 & C & - \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Visit E}
+% Step 6: Visit E
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & GRAY & 5 & I & - \\ \hline
+    E & GRAY & 6 & D & - \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & WHITE & - & NIL & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & GRAY & 4 & C & - \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Finish E}
+% Step 7: Finish E
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & GRAY & 5 & I & - \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & WHITE & - & NIL & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & GRAY & 4 & C & - \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Finish D}
+% Step 8: Finish D
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & WHITE & - & NIL & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & GRAY & 4 & C & - \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Visit G}
+% Step 9: Visit G
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & WHITE & - & NIL & - \\ \hline
+    G & GRAY & 9 & I & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & GRAY & 4 & C & - \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Visit F}
+% Step 10: Visit F
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & GRAY & 10 & G & - \\ \hline
+    G & GRAY & 9 & I & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & GRAY & 4 & C & - \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Finish F}
+% Step 11: Finish F
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & BLACK & 10 & G & 11 \\ \hline
+    G & GRAY & 9 & I & - \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & GRAY & 4 & C & - \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Finish G}
+% Step 12: Finish G
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & BLACK & 10 & G & 11 \\ \hline
+    G & BLACK & 9 & I & 12 \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & GRAY & 4 & C & - \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Finish I}
+% Step 13: Finish I
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & GRAY & 3 & B & - \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & BLACK & 10 & G & 11 \\ \hline
+    G & BLACK & 9 & I & 12 \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & BLACK & 4 & C & 13 \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Finish C}
+% Step 14: Finish C
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & BLACK & 3 & B & 14 \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & BLACK & 10 & G & 11 \\ \hline
+    G & BLACK & 9 & I & 12 \\ \hline
+    H & WHITE & - & NIL & - \\ \hline
+    I & BLACK & 4 & C & 13 \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Visit H}
+% Step 15: Visit H
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & BLACK & 3 & B & 14 \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & BLACK & 10 & G & 11 \\ \hline
+    G & BLACK & 9 & I & 12 \\ \hline
+    H & GRAY & 15 & B & - \\ \hline
+    I & BLACK & 4 & C & 13 \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Finish H}
+% Step 16: Finish H
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & GRAY & 2 & A & - \\ \hline
+    C & BLACK & 3 & B & 14 \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & BLACK & 10 & G & 11 \\ \hline
+    G & BLACK & 9 & I & 12 \\ \hline
+    H & BLACK & 15 & B & 16 \\ \hline
+    I & BLACK & 4 & C & 13 \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Finish B}
+% Step 17: Finish B
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & GRAY & 1 & NIL & - \\ \hline
+    B & BLACK & 2 & A & 17 \\ \hline
+    C & BLACK & 3 & B & 14 \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & BLACK & 10 & G & 11 \\ \hline
+    G & BLACK & 9 & I & 12 \\ \hline
+    H & BLACK & 15 & B & 16 \\ \hline
+    I & BLACK & 4 & C & 13 \\ \hline
+\end{tabular}
+\vs\
+
+\noindent{Finish A (Final Step)}
+% Step 18: Finish A (Final Step)
+\begin{tabular}{|c|c|c|c|c|}
+    \hline
+    Vertex & Color & Discovery Time & Predecessor & Finishing Time \\ \hline
+    A & BLACK & 1 & NIL & 18 \\ \hline
+    B & BLACK & 2 & A & 17 \\ \hline
+    C & BLACK & 3 & B & 14 \\ \hline
+    D & BLACK & 5 & I & 8 \\ \hline
+    E & BLACK & 6 & D & 7 \\ \hline
+    F & BLACK & 10 & G & 11 \\ \hline
+    G & BLACK & 9 & I & 12 \\ \hline
+    H & BLACK & 15 & B & 16 \\ \hline
+    I & BLACK & 4 & C & 13 \\ \hline
+\end{tabular}
+\vs\
+\newpage
 
 \noindent{\bf Problem 4: }(15 points)
-
 Consider the following graph.
-
 \begin{figure}[!h]
-\centering
-\includegraphics[scale=.74]{Exams/graph-prims-kruksal.png}
+    \centering
+    \includegraphics[scale=.74]{Exams/graph-prims-kruksal.png}
 \end{figure}
 
-
 \begin{itemize}
-    \item[(a)]  Use Prim's algorithm to find a minimum-spanning-tree  for the above graph. Start from the vertex A. Draw the final MST and give the total weight.
-    \item[(b)]  Use Kruksal's algorithm to find a minimum-spanning-tree  for the above graph.  Draw the final MST and give the total weight.
+    \item[(a)] Use Prim's algorithm to find a minimum-spanning-tree  for the above graph. Start from the vertex A. Draw the final MST and give the total weight. \\
+    \textbf{Answer: }Prim's Algorithm (Starting from Vertex A) \\
+    We start with vertex A and add the minimum weight edge that connects a vertex in the MST to a vertex outside the MST.
+    \begin{enumerate}
+        \item Start at vertex A.
+        \item Select the minimum weight edge from A's neighbors: \textbf{A -- C} with weight 4.
+        \item The MST now includes vertices \{A, C\}. The available edges are:
+            \begin{itemize}
+                \item A -- F with weight 7
+                \item C -- F with weight 2
+                \item C -- D with weight 3
+            \end{itemize}
+        \item Add \textbf{C -- F} (weight 2) since it’s the smallest edge connected to the current MST.
+        \item The MST now includes vertices \{A, C, F\}. The available edges are:
+            \begin{itemize}
+                \item A -- F with weight 7
+                \item C -- D with weight 3
+                \item F -- G with weight 8
+            \end{itemize}
+        \item Add \textbf{C -- D} (weight 3).
+        \item The MST now includes vertices \{A, C, F, D\}. The available edges are:
+            \begin{itemize}
+                \item A -- F with weight 7
+                \item F -- G with weight 8
+                \item D -- G with weight 9
+                \item D -- E with weight 3
+            \end{itemize}
+        \item Add \textbf{D -- E} (weight 3).
+        \item The MST now includes vertices \{A, C, F, D, E\}. The available edges are:
+            \begin{itemize}
+                \item A -- F with weight 7
+                \item F -- G with weight 8
+                \item D -- G with weight 9
+                \item E -- H with weight 7
+            \end{itemize}
+        \item Add \textbf{E -- H} (weight 7).
+        \item The MST now includes vertices \{A, C, F, D, E, H\}. The available edges are:
+            \begin{itemize}
+                \item A -- F with weight 7
+                \item F -- G with weight 8
+                \item D -- G with weight 9
+                \item H -- G with weight 3
+            \end{itemize}
+        \item Add \textbf{H -- G} (weight 3).
+    \end{enumerate}
+    The edges in the MST are:
+    \begin{itemize}
+        \item A -- C (4)
+        \item C -- F (2)
+        \item C -- D (3)
+        \item D -- E (3)
+        \item E -- H (7)
+        \item H -- G (3)
+    \end{itemize}
+    
+    \noindent \textbf{Total Weight} = 4 + 2 + 3 + 3 + 7 + 3 = 22.
+
+    \begin{center}
+    \textbf{Minimum Spanning Tree (MST) using Prim's Algorithm}
+    \end{center}
+    
+    \begin{tikzpicture}[node distance={20mm}, thick, main/.style = {draw, circle}] 
+    
+    % Define the vertices
+    \node[main] (A) {A}; 
+    \node[main] (C) [above right of=A] {C}; 
+    \node[main] (F) [below right of=A] {F}; 
+    \node[main] (D) [above right of=F] {D}; 
+    \node[main] (E) [right of=D] {E}; 
+    \node[main] (H) [below right of=E] {H}; 
+    \node[main] (G) [below left of=H] {G}; 
+    
+    % Draw the edges in the MST with their weights
+    \draw (A) -- (C) node[midway, above left] {4};
+    \draw (C) -- (F) node[midway, left] {2};
+    \draw (C) -- (D) node[midway, above] {3};
+    \draw (D) -- (E) node[midway, above] {3};
+    \draw (E) -- (H) node[midway, right] {7};
+    \draw (H) -- (G) node[midway, below] {3};
+    
+    \end{tikzpicture}
+    
+    \item[(b)] Use Kruksal's algorithm to find a minimum-spanning-tree for the above graph. Draw the final MST and give the total weight. \\
+    \textbf{Answer: }In Kruskal's algorithm, we sort all edges by weight and add edges to the MST as long as they do not form a cycle.
+    
+    \begin{enumerate}
+        \item Sort edges by weight:
+            \begin{itemize}
+                \item C -- F (2)
+                \item C -- D (3)
+                \item D -- E (3)
+                \item H -- G (3)
+                \item A -- C (4)
+                \item E -- H (7)
+                \item A -- F (7)
+                \item F -- G (8)
+                \item D -- G (9)
+                \item B -- E (9)
+            \end{itemize}
+        \item Add edges to the MST in order:
+            \begin{itemize}
+                \item Add \textbf{C -- F} (weight 2).
+                \item Add \textbf{C -- D} (weight 3).
+                \item Add \textbf{D -- E} (weight 3).
+                \item Add \textbf{H -- G} (weight 3).
+                \item Add \textbf{A -- C} (weight 4).
+                \item Add \textbf{E -- H} (weight 7).
+            \end{itemize}
+        \item Stop here, as we have included all vertices in the MST.
+    \end{enumerate}
+    
+    The edges in the MST are:
+    \begin{itemize}
+        \item C -- F (2)
+        \item C -- D (3)
+        \item D -- E (3)
+        \item H -- G (3)
+        \item A -- C (4)
+        \item E -- H (7)
+    \end{itemize}
+    
+    \noindent \textbf{Total Weight} = 2 + 3 + 3 + 3 + 4 + 7 = 22.
+
+    \begin{center}
+    \textbf{Minimum Spanning Tree (MST) using Kruskal's Algorithm}
+    \end{center}
+
+    \begin{tikzpicture}[node distance={20mm}, thick, main/.style = {draw, circle}] 
+
+    % Define the vertices
+    \node[main] (A) {A}; 
+    \node[main] (C) [above right of=A] {C}; 
+    \node[main] (F) [below right of=A] {F}; 
+    \node[main] (D) [above right of=F] {D}; 
+    \node[main] (E) [right of=D] {E}; 
+    \node[main] (H) [below right of=E] {H}; 
+    \node[main] (G) [below left of=H] {G}; 
+
+    % Draw the edges in the MST with their weights
+    \draw (A) -- (C) node[midway, above left] {4};
+    \draw (C) -- (F) node[midway, left] {2};
+    \draw (C) -- (D) node[midway, above] {3};
+    \draw (D) -- (E) node[midway, above] {3};
+    \draw (E) -- (H) node[midway, right] {7};
+    \draw (H) -- (G) node[midway, below] {3};
+
+    \end{tikzpicture}
 \end{itemize}
+\newpage
 
 \noindent{\bf Problem 5: }(15 points)
 \vs\
@@ -150,7 +733,36 @@ Consider the following graph.
 Let $G = (V,E,W)$ be a weighted connected (undirected) graph, where $V$ is the set of vertices, $E$ is the set of edges, $w_e \in W$ for each $e \in E$ is a nonnegative weight of the edge $e$. A spanning tree is defined as usual, namely $T = (V, T_E)$ where $T_E$ is a subset of  $E$ and $T$ is a tree. The width of a spanning tree $T$ is max $\{w_e | e \in T_E \}$.  Thus it is the most “expensive” edge in the tree. $T$ is a Minimum width spanning tree of $G$ if it is a spanning tree and achieves the minimum width among all spanning trees of $G.$ 
 \begin{itemize} 
     \item[(a)] Prove that any minimum spanning tree of $G$ is also a minimum width spanning tree of $G$. (Hint: You may use proof by contradiction.)
+    \begin{proof}
+        To prove that any Minimum Spanning Tree (MST) of $G$ is also a Minimum Width Spanning Tree (MWST), we proceed by contradiction.
+        \begin{itemize}
+            \item Suppose $T$ is a minimum spanning tree of $G$, but $T$ is not a Minimum Width Spanning Tree.
+            \item This means there exists another spanning tree $T'$ with $\max \{w_e \mid e \in T'_E\} < \max \{w_e \mid e \in T_E\}$, implying that the maximum edge weight in $T'$ is smaller than the maximum edge weight in $T$.
+            \item However, because $T$ is an MST, it has the smallest possible total weight among all spanning trees in $G$. The presence of a spanning tree $T'$ with a smaller maximum edge weight suggests that $T$ could be modified to reduce its maximum edge weight without increasing its total weight.
+            \item Specifically, we could replace an edge in $T$ with an edge from $T'$ (if needed) to obtain a tree with the same or lower total weight and a smaller maximum edge weight, which would contradict the assumption that $T$ is an MST.
+            \item Thus, by contradiction, any MST of $G$ must also be a Minimum Width Spanning Tree.
+        \end{itemize}
+    \end{proof}
+    
     \item[(b)] Show with an example that even if the weights of $G = (V,E,W)$ are all distinct, there could be more than one minimum width spanning tree.
+    \begin{proof}
+         Consider a graph $G = (V, E, W)$ with vertices $V = \{A, B, C, D\}$ and edges with distinct weights as follows:
+        \begin{itemize}
+            \item[] Edge $A - B$ with weight 1
+            \item[] Edge $A - C$ with weight 2
+            \item[] Edge $B - D$ with weight 4
+            \item[] Edge $C - D$ with weight 3
+            \item[] Edge $B - C$ with weight 5
+        \end{itemize}
+        
+        We can construct two different spanning trees with the same minimum width:
+        \begin{itemize}
+            \item[] \textbf{Tree 1:} $\{A - B, A - C, B - D\}$ with a maximum edge weight of 4.
+            \item[] \textbf{Tree 2:} $\{A - B, B - D, C - D\}$ with a maximum edge weight of 4.
+        \end{itemize}
+        
+        Both trees are spanning trees that cover all vertices in $G$ and have a maximum edge weight of 4, making them Minimum Width Spanning Trees. Therefore, even with distinct edge weights, multiple Minimum Width Spanning Trees can exist.
+    \end{proof}
 \end{itemize}
 \vs\
 
@@ -159,10 +771,100 @@ Let $G = (V,E,W)$ be a weighted connected (undirected) graph, where $V$ is the s
 
 \begin{itemize}
     \item[(a)] Draw a weighted graph that has exactly 5 different minimum spanning trees. Explain how you get the count.
+    \begin{proof}
+        To create a graph with exactly 5 different Minimum Spanning Trees (MSTs), we construct a graph that allows for multiple spanning trees of the same weight. We do this by having several edges with equal weights, providing distinct choices that maintain the total weight for an MST.
+        
+        \begin{enumerate}
+            \item Consider a graph $G$ with vertices $V = \{A, B, C, D, E\}$.
+            \item Construct edges as follows:
+            \begin{itemize}
+                \item Edge $A - B$ with weight 1
+                \item Edge $A - C$ with weight 1
+                \item Edge $B - D$ with weight 2
+                \item Edge $C - D$ with weight 2
+                \item Edge $D - E$ with weight 3
+            \end{itemize}
+            \item \textbf{Counting MSTs:} We need to select edges to cover all vertices while minimizing the total weight.
+                \begin{itemize}
+                    \item The edges $A - B$ and $A - C$ each have weight 1. We can choose either of these edges to be in the MST, giving us 2 choices.
+                    \item For edges $B - D$, $C - D$, and $D - E$ with weight 2, we select 2 out of these 3 edges to complete the MST, yielding $\binom{3}{2} = 3$ combinations.
+                \end{itemize}
+            \item Combining these choices, we have $2 \times 3 = 5$ unique MSTs.
+        \end{enumerate}
+        
+        Therefore, the resulting graph has exactly 5 different MSTs, all of the same total weight.
+    \end{proof}
+
+    \begin{center}
+        \begin{tikzpicture}[node distance={20mm}, thick, main/.style = {draw, circle}]
+            \node[main] (A) {A};
+            \node[main] (B) [right of=A] {B};
+            \node[main] (C) [below of=A] {C};
+            \node[main] (D) [right of=C] {D};
+            \node[main] (E) [below right of=D] {E};
+            
+            \draw (A) -- (B) node[midway, above] {1};
+            \draw (A) -- (C) node[midway, left] {1};
+            \draw (B) -- (D) node[midway, above] {2};
+            \draw (C) -- (D) node[midway, right] {2};
+            \draw (D) -- (E) node[midway, below] {3};
+        \end{tikzpicture}
+    \end{center}
+    \newpage
+    
     \item[(b)] Draw a weighted graph that has exactly 25 different minimum spanning trees. Explain how you get the count.
+    \begin{proof}
+        To construct a graph with exactly 25 distinct Minimum Spanning Trees (MSTs), we design a graph where multiple spanning trees have the same total weight by including two sets of edges with five selectable options each.
+        
+        \begin{enumerate}
+            \item Consider a graph $G$ with vertices $V = \{A, B, C, D, E\}$.
+            \item Define edges in two weight classes as follows:
+                \begin{itemize}
+                    \item Five edges of weight 1: $\{A - B, A - C, A - D, A - E, B - C\}$.
+                    \item Five edges of weight 2: $\{B - D, B - E, C - D, C - E, D - E\}$.
+                \end{itemize}
+            \item \textbf{Counting the MSTs:} To form each MST, we select one edge from each set of equal-weight edges, ensuring the resulting subgraph is a connected, cycle-free spanning tree with minimum weight:
+                \begin{itemize}
+                    \item From the five edges of weight 1, choose exactly four to maintain connectivity across all five vertices, resulting in 5 distinct ways to select edges in this class without forming cycles.
+                    \item From the five edges of weight 2, select exactly one to complete the spanning tree, creating a unique MST configuration. There are 5 ways to choose an edge in this class.
+                \end{itemize}
+            \item \textbf{Total MST count:} By multiplying the choices, we obtain $5 \times 5 = 25$ unique MSTs, each with the same minimum weight.
+        \end{enumerate}
+        
+        Thus, the graph $G$ has exactly 25 different MSTs, all with identical minimum weights.
+    \end{proof}
+    
+    \begin{figure}[h!]
+    \centering
+    \begin{tikzpicture}[scale=2, every node/.style={circle, draw, fill=white, inner sep=2pt}]
+    
+        % Define nodes (vertices)
+        \node (A) at (0, 1) {A};
+        \node (B) at (1, 2) {B};
+        \node (C) at (2, 1) {C};
+        \node (D) at (1, 0) {D};
+        \node (E) at (1, 1) {E};
+    
+        % Draw edges of weight 1 (dashed lines)
+        \draw[dashed] (A) -- (B) node[midway, left] {1};
+        \draw[dashed] (A) -- (C) node[midway, above] {1};
+        \draw[dashed] (A) -- (D) node[midway, left] {1};
+        \draw[dashed] (A) -- (E) node[midway, above left] {1};
+        \draw[dashed] (B) -- (C) node[midway, right] {1};
+    
+        % Draw edges of weight 2 (solid lines)
+        \draw[thick] (B) -- (D) node[midway, right] {2};
+        \draw[thick] (B) -- (E) node[midway, below right] {2};
+        \draw[thick] (C) -- (D) node[midway, below] {2};
+        \draw[thick] (C) -- (E) node[midway, below left] {2};
+        \draw[thick] (D) -- (E) node[midway, below right] {2};
+    
+    \end{tikzpicture}
+    \caption{Graph with vertices $A, B, C, D, E$ and two sets of edges: weight 1 (dashed) and weight 2 (solid).}
+    \end{figure}
 \end{itemize}
 \vs\
-
+\newpage
 \noindent{\bf Problem 10: }(15 points)
 \vs\
 
@@ -176,6 +878,118 @@ Consider the collection of all undirected graphs with 10 nodes and 6 edges. Let 
     \item[(E)] M = 6, m = 3
 \end{itemize}
 
-Justify your selection by ruling out the other choices. Show two graphs that satisfy $M$ and $m$.
+Justify your selection by ruling out the other choices. Show two graphs that satisfy $M$ and $m$. \\
 
+\noindent \textbf{Answer: }We analyze the maximum and minimum possible number of connected components in a graph with 10 nodes and 6 edges. We consider two cases: 
+\begin{itemize}
+    \item maximizing the number of connected components, and
+    \item minimizing the number of connected components, using only 6 edges.
+\end{itemize}
+
+\begin{itemize}
+    \item[(1)] {\bf Maximum Number of Connected Components (M):}
+    
+    To maximize the number of connected components, we aim to keep as many nodes isolated as possible. With 10 nodes, we add edges incrementally, ensuring that each edge connects a new pair of nodes to avoid reducing the number of components unnecessarily.
+
+    - Adding one edge creates a connected component of 2 nodes, leaving 8 isolated nodes, resulting in 9 connected components.
+    - Adding two edges, each connecting a different pair of nodes, gives two 2-node components and 6 isolated nodes, resulting in 8 connected components.
+    - Adding three edges with each edge connecting a different pair of nodes results in three 2-node components and 4 isolated nodes, which gives 7 connected components.
+    - Adding four edges with each edge connecting a different pair of nodes results in four 2-node components and 2 isolated nodes, which gives 6 connected components.
+
+    \noindent Thus, the maximum number of connected components achievable with 6 edges is \( M = 6 \).
+
+    \item[(2)] {\bf Minimum Number of Connected Components (m):}
+
+    To minimize the number of connected components, we want to connect as many nodes as possible into a single component while using only 6 edges.
+
+    - Using a tree structure, we can connect up to 7 nodes with 6 edges (since a tree with \( n \) nodes requires \( n-1 \) edges).
+    - This configuration leaves the remaining 3 nodes isolated.
+
+    \noindent Therefore, we have one connected component of 7 nodes and 3 isolated nodes, resulting in a minimum of 4 connected components. Hence, \( m = 4 \).
+\end{itemize}
+
+\noindent {\bf Conclusion:} The correct answer is:
+
+\[
+\boxed{(D) \, M = 6, m = 4}
+\]
+
+\noindent To rule out the other options:
+
+\begin{itemize}
+    \item[(A)] \( M = 10, m = 10 \): This is impossible because, with 6 edges, we cannot have all nodes isolated.
+    \item[(B)] \( M = 10, m = 1 \): With only 6 edges, it is impossible to connect all 10 nodes in a single component.
+    \item[(C)] \( M = 7, m = 4 \): \( M = 7 \) is not achievable, as shown by the analysis above.
+    \item[(E)] \( M = 6, m = 3 \): \( m = 3 \) cannot be achieved with only 6 edges, as connecting a large component with 10 nodes would require more edges.
+\end{itemize}
+
+\noindent {\bf Graph Examples:}
+\begin{itemize}
+    \item[1.] A graph with \( M = 6 \) connected components: Six 2-node components and two isolated nodes.
+        \begin{center}
+        \begin{tikzpicture}[scale=1.5, every node/.style={circle, draw, fill=gray!20, inner sep=1.5pt}]
+    
+        % Isolated nodes
+        \node (1) at (0, 2) {1};
+        \node (2) at (2, 2) {2};
+    
+        % Connected pairs (six 2-node components)
+        \node (3) at (0, 0) {3};
+        \node (4) at (1, 0) {4};
+    
+        \node (5) at (2, 0) {5};
+        \node (6) at (3, 0) {6};
+    
+        \node (7) at (4, 0) {7};
+        \node (8) at (5, 0) {8};
+    
+        \node (9) at (1, -1.5) {9};
+        \node (10) at (2, -1.5) {10};
+    
+        \node (11) at (3, -1.5) {11};
+        \node (12) at (4, -1.5) {12};
+    
+        % Draw edges between pairs to create 2-node components
+        \draw (3) -- (4);
+        \draw (5) -- (6);
+        \draw (7) -- (8);
+        \draw (9) -- (10);
+        \draw (11) -- (12);
+    
+        % Extra 2-node component to reach six
+        \node (13) at (0, -1.5) {13};
+        \node (14) at (0.8, -1.5) {14};
+        \draw (13) -- (14);
+    
+        \end{tikzpicture}
+        \end{center}
+    \item[2.] A graph with \( m = 4 \) connected components: One component with 7 nodes (using a tree with 6 edges) and three isolated nodes.
+        \begin{center}
+        \begin{tikzpicture}[scale=1.5, every node/.style={circle, draw, fill=gray!20, inner sep=1.5pt}]
+    
+        % Tree component with 7 nodes
+        \node (1) at (0, 0) {1};
+        \node (2) at (1, 0) {2};
+        \node (3) at (2, 0) {3};
+        \node (4) at (1.5, -1) {4};
+        \node (5) at (0.5, -1) {5};
+        \node (6) at (2.5, -1) {6};
+        \node (7) at (2, -2) {7};
+    
+        % Draw edges for the tree (6 edges total)
+        \draw (1) -- (2);
+        \draw (2) -- (3);
+        \draw (2) -- (5);
+        \draw (3) -- (4);
+        \draw (3) -- (6);
+        \draw (6) -- (7);
+    
+        % Isolated nodes
+        \node (8) at (-1, 1) {8};
+        \node (9) at (3, 1) {9};
+        \node (10) at (-1, -1) {10};
+    
+        \end{tikzpicture}
+        \end{center}
+\end{itemize}
 \end{document}
